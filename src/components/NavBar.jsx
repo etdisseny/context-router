@@ -1,13 +1,17 @@
-import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { useUserContext } from "../context/UserContext";
 
 export const NavBar = () => {
-  console.log(useContext(UserContext));
+  const { user, setUser } = useUserContext(); //utilizamos el mini hook que hemo creado y desestructruramos su contendo
   return (
     <nav>
       <NavLink to="/">Home</NavLink> |
-      <NavLink to="/dashboard"> Dashboard</NavLink>
+      {user && ( //podemos simmular si existe el usuario o no pinta el dashboard
+        <>
+          <NavLink to="/dashboard"> Dashboard</NavLink>
+          <button onClick={() => setUser(false)}>Logout</button>
+        </>
+      )}
     </nav>
   );
 };
